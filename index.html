@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zoro Trader | Premium Quotex Signals</title>
+  <meta name="description" content="Join Zoro Trader — exclusive Quotex trading signals, expert analysis and high-accuracy setups. Free Telegram channel." />
+  <meta property="og:title" content="Zoro Trader | Premium Quotex Signals" />
+  <meta property="og:description" content="Exclusive Quotex trading signals & expert analysis. Join the free Telegram channel now." />
+  <meta property="og:image" content="https://i.ibb.co/pv9YkjzM/zoro-logo.jpg" />
+  <meta name="theme-color" content="#0a0e17" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070b14;
+      --bg-elevated: #0d1321;
+      --accent: #00e676;
+      --accent-dim: #00c853;
+      --gold: #ffd700;
+      --gold-soft: #ffec8b;
+      --text: #f0f4f8;
+      --text-muted: #8b9bb4;
+      --glass: rgba(13, 19, 33, 0.65);
+      --border: rgba(255, 255, 255, 0.08);
+      --glow: 0 0 40px rgba(0, 230, 118, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ========== 3D Canvas Background ========== */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Floating orbs / light leaks */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 1;
+      animation: float 18s ease-in-out infinite;
+    }
+    .orb-1 {
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(0, 230, 118, 0.45), transparent 70%);
+      top: -120px;
+      left: -80px;
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.25), transparent 70%);
+      bottom: -100px;
+      right: -60px;
+      animation-delay: -6s;
+    }
+    .orb-3 {
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(0, 180, 255, 0.2), transparent 70%);
+      top: 40%;
+      left: 60%;
+      animation-delay: -12s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(40px, -30px) scale(1.08); }
+      66% { transform: translate(-30px, 20px) scale(0.95); }
+    }
+
+    /* ========== Layout ========== */
+    .page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      object-fit: cover;
+      box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .nav-cta {
+        display: inline-flex;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 5% 5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .logo-wrap {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .logo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -18px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), var(--gold), #00b4ff, var(--accent));
+      animation: spin 8s linear infinite;
+      opacity: 0.7;
+      filter: blur(2px);
+    }
+
+    .logo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: var(--bg);
+    }
+
+    .logo {
+      position: relative;
+      z-index: 1;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--glow), 0 20px 50px rgba(0, 0, 0, 0.5);
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .logo:hover {
+      transform: scale(1.06) rotate(4deg);
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(0, 230, 118, 0.1);
+      border: 1px solid rgba(0, 230, 118, 0.25);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 0.35rem 0.9rem;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .badge::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--accent);
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, #c8d6e5 50%, var(--gold-soft) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+    }
+
+    .hero-sub strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* CTA Button */
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
+      color: #04120a;
+      font-weight: 700;
+      font-size: 1.1rem;
+      padding: 1rem 2.2rem;
+      border-radius: 16px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 32px rgba(0, 230, 118, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 40px rgba(0, 230, 118, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .cta:hover::before {
+      transform: translateX(100%);
+    }
+
+    .cta:active {
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .cta svg {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+    }
+
+    /* Stats / Trust */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem 2.5rem;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      width: 100%;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* Features */
+    .features {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1rem 5% 5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 230, 118, 0.4), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(0, 230, 118, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(0, 230, 118, 0.08);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.1rem;
+      font-size: 1.4rem;
+      background: rgba(0, 230, 118, 0.1);
+      border: 1px solid rgba(0, 230, 118, 0.15);
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Footer CTA */
+    .bottom-cta {
+      text-align: center;
+      padding: 3rem 5% 4rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .bottom-cta h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .bottom-cta p {
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem 5% 2rem;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Entrance animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.35s; }
+    .delay-4 { animation-delay: 0.5s; }
+    .delay-5 { animation-delay: 0.65s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      .orb, .logo-wrap::before, .badge::before {
+        animation: none;
+      }
+      .fade-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1138363305520817');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=1138363305520817&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
+  <canvas id="bg-canvas"></canvas>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="page">
+    <nav>
+      <a href="#" class="nav-brand">
+        <img src="https://i.ibb.co/pv9YkjzM/zoro-logo.jpg" alt="Zoro Trader" width="42" height="42" />
+        Zoro Trader
+      </a>
+      <a href="https://telegram.me/+-sfj2bF3IdxkMTVk" class="cta nav-cta" target="_blank" rel="noopener" onclick="fbq('track','Lead');">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        Join Channel
+      </a>
+    </nav>
+
+    <section class="hero">
+      <div class="logo-wrap fade-up">
+        <img src="https://i.ibb.co/pv9YkjzM/zoro-logo.jpg" alt="Zoro Trader Logo" class="logo" width="140" height="140" />
+      </div>
+
+      <div class="badge fade-up delay-1">Live Quotex Signals</div>
+
+      <h1 class="fade-up delay-2">Zoro Trader</h1>
+
+      <p class="hero-sub fade-up delay-3">
+        Premium <strong>Quotex</strong> trading signals, high-accuracy setups & real-time market analysis — free on Telegram.
+      </p>
+
+      <a href="https://telegram.me/+-sfj2bF3IdxkMTVk"
+         class="cta fade-up delay-4"
+         target="_blank"
+         rel="noopener"
+         onclick="fbq('track','Lead');">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        Join Free Telegram Channel
+      </a>
+
+      <div class="stats fade-up delay-5">
+        <div class="stat">
+          <div class="stat-value">Daily</div>
+          <div class="stat-label">Fresh Signals</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">High</div>
+          <div class="stat-label">Accuracy Focus</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Free Access</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="card fade-up delay-3">
+        <div class="card-icon">📊</div>
+        <h3>Precision Setups</h3>
+        <p>Clear entry, target & stop-loss levels designed for Quotex binary options traders.</p>
+      </div>
+      <div class="card fade-up delay-4">
+        <div class="card-icon">⚡</div>
+        <h3>Real-Time Alerts</h3>
+        <p>Instant Telegram notifications so you never miss high-probability trading opportunities.</p>
+      </div>
+      <div class="card fade-up delay-5">
+        <div class="card-icon">🎯</div>
+        <h3>Expert Analysis</h3>
+        <p>Market insights and strategy tips from experienced traders focused on consistent results.</p>
+      </div>
+    </section>
+
+    <section class="bottom-cta">
+      <h2 class="fade-up">Ready to trade smarter?</h2>
+      <p class="fade-up delay-1">Join thousands of traders receiving free Quotex signals every day.</p>
+      <a href="https://telegram.me/+-sfj2bF3IdxkMTVk"
+         class="cta fade-up delay-2"
+         target="_blank"
+         rel="noopener"
+         onclick="fbq('track','Lead');">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        Open Telegram Channel
+      </a>
+    </section>
+
+    <footer>
+      <p>© 2026 Zoro Trader · Quotex Signals Channel · <a href="https://telegram.me/+-sfj2bF3IdxkMTVk" target="_blank" rel="noopener">Join now</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // ========== 3D Particle Field ==========
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height, particles = [], mouse = { x: null, y: null };
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const PARTICLE_COUNT = Math.min(110, Math.floor((window.innerWidth * window.innerHeight) / 12000));
+
+    class Particle {
+      constructor() {
+        this.reset(true);
+      }
+      reset(initial = false) {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.z = Math.random() * 1.5 + 0.3;
+        this.size = (Math.random() * 1.8 + 0.6) * this.z;
+        this.speedX = (Math.random() - 0.5) * 0.35 * this.z;
+        this.speedY = (Math.random() - 0.5) * 0.35 * this.z;
+        this.alpha = Math.random() * 0.5 + 0.15;
+        // slight green/gold tint variety
+        this.hue = Math.random() > 0.7 ? 45 : 145;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // mouse attraction (subtle)
+        if (mouse.x !== null) {
+          const dx = mouse.x - this.x;
+          const dy = mouse.y - this.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 180) {
+            const force = (180 - dist) / 180 * 0.02 * this.z;
+            this.x += dx * force;
+            this.y += dy * force;
+          }
+        }
+
+        if (this.x < -20 || this.x > width + 20 || this.y < -20 || this.y > height + 20) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, 90%, 60%, ${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+      particles.push(new Particle());
+    }
+
+    // Connection lines for depth
+    function drawConnections() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i];
+          const b = particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 110) {
+            const opacity = (1 - dist / 110) * 0.12 * Math.min(a.z, b.z);
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(0, 230, 118, ${opacity})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      // soft radial vignette
+      const grad = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, Math.max(width, height) * 0.7);
+      grad.addColorStop(0, 'rgba(7, 11, 20, 0)');
+      grad.addColorStop(1, 'rgba(7, 11, 20, 0.4)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      drawConnections();
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Mouse tracking
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    window.addEventListener('mouseleave', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    // Touch support
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches[0]) {
+        mouse.x = e.touches[0].clientX;
+        mouse.y = e.touches[0].clientY;
+      }
+    }, { passive: true });
+  </script>
+</body>
+</html>
